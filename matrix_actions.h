@@ -9,6 +9,7 @@ struct matrix;
 ///adding two matrices(a and b) the result - the third matrix c
 matrix* adding(matrix* a, matrix* b);
 
+
 ///swap elements a and b
 void element_swap(element_t* a, element_t* b);
 
@@ -18,11 +19,13 @@ matrix* transpose(matrix* a, matrix* b);
 ///transpose matrix a
 matrix* self_transpose(matrix* a);
 
+
 ///multiplying two matrices
 matrix* matrix_multipl(matrix* a, matrix* b, matrix* c);
 
 ///multiplying matrix by number
 matrix* number_multipl(matrix* a, element_t b);
+
 
 ///swap two strings in matrix
 void swap_strings(matrix* a, size_t x, size_t y);
@@ -36,7 +39,7 @@ void multipl_str(matrix* a, size_t x, element_t c);
 
 matrix* matrix_exp(matrix* a, element_t eps);
 
-element_t m_norm(matrix* a);
+element_t matrix_norm(matrix* a);
 
 matrix* gauss (matrix* a);
 

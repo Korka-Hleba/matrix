@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1714766396 source:c:\users\user\desktop\matrix\main.c
+1714767314 source:c:\users\user\desktop\matrix\main.c
 	<stdio.h>
 	<stdlib.h>
 	<malloc.h>
@@ -13,11 +13,11 @@
 	"matrix.h"
 	"matrix_actions.h"
 
-1714766154 c:\users\user\desktop\matrix\matrix.h
+1714767314 c:\users\user\desktop\matrix\matrix.h
 	<stdio.h>
 	<stdlib.h>
 
-1714766382 c:\users\user\desktop\matrix\matrix_actions.h
+1714767328 c:\users\user\desktop\matrix\matrix_actions.h
 	"matrix.h"
 
 1714762156 source:c:\users\user\desktop\matrix\matrix_size.c

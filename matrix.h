@@ -6,33 +6,36 @@ typedef struct matrix matrix;
 typedef double element_t;
 struct matrix;
 
-///количество строк в матрице
+///number of rows in the matrix
 size_t matrix_m(matrix* a);
 
-///количество столбцов в матрице
+///number of columns in the matrix
 size_t matrix_n(matrix* a);
 
-///новая матрица с m строками и n столбцами
-matrix* matrix_alloc(size_t M, size_t N);
-
-///копирование матрицы
-matrix* matrix_copy(matrix* a, matrix* b);
-
-///нулевая матрица с m строками и n столбцами
-matrix* null_alloc(size_t M, size_t N);
-
-///единичная матрица с m строками и n столбцами
-matrix* e_alloc(size_t M, size_t N);
-
-///изменение элемента с индексом (i,j) в матрице на значение x
-void change_elem(matrix* a, size_t i, size_t j, element_t x);
-
-///возвращает элемент в матрице на месте (i,j)
-element_t in_index(matrix* a, size_t i, size_t j);
-
-///изменение размера матрицы на m строк, n столбцов
+///resize the matrix by m rows, n columns
 matrix* matrix_resize(matrix* a, size_t m, size_t n);
 
-///освобождает память, выделенную под матрицу
+
+///new matrix with m rows and n columns
+matrix* matrix_alloc(size_t M, size_t N);
+
+///zero matrix with m rows and n columns
+matrix* null_alloc(size_t M, size_t N);
+
+///identity matrix with m rows and n columns
+matrix* e_alloc(size_t M, size_t N);
+
+///copying a matrix
+matrix* matrix_copy(matrix* a, matrix* b);
+
+///frees memory allocated for the matrix
 void matrix_free(matrix* a);
+
+///change the element with index (i,j) in the matrix to the value x
+void change_elem(matrix* a, size_t i, size_t j, element_t x);
+
+///returns the element in the matrix at position (i,j)
+element_t in_index(matrix* a, size_t i, size_t j);
+
+
 #endif // MATRIX_H

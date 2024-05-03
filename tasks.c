@@ -74,7 +74,7 @@ matrix* matrix_exp(matrix* a, element_t eps)
     matrix* deg = e_alloc(ma, na);
     matrix* cur = null_alloc(ma, na);
     double N=1;
-    while(m_norm(deg)>= eps)
+    while(matrix_norm(deg)>= eps)
     {
         matrix* x = null_alloc(ma, na);
         cur = adding(cur, deg);
@@ -90,7 +90,7 @@ matrix* matrix_exp(matrix* a, element_t eps)
     return cur;
 }
 
-element_t m_norm(matrix* a)
+element_t matrix_norm(matrix* a)
 {
     size_t ma = matrix_m(a);
     size_t na = matrix_n(a);
