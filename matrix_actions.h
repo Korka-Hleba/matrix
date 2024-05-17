@@ -36,6 +36,8 @@ void minus_str(matrix* a, size_t x, size_t y, element_t c);
 ///multiplies row x of matrix a by number c
 void multipl_str(matrix* a, size_t x, element_t c);
 
+///prints the given matrix
+void matrix_print(struct matrix* a);
 
 matrix* matrix_exp(matrix* a, element_t eps);
 

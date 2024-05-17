@@ -15,15 +15,14 @@ size_t matrix_n(matrix* a);
 ///resize the matrix by m rows, n columns
 matrix* matrix_resize(matrix* a, size_t m, size_t n);
 
-
 ///new matrix with m rows and n columns
-matrix* matrix_alloc(size_t M, size_t N);
+matrix* matrix_alloc(size_t given_m, size_t given_n);
 
 ///zero matrix with m rows and n columns
-matrix* null_alloc(size_t M, size_t N);
+matrix* null_alloc(size_t given_m, size_t given_n);
 
 ///identity matrix with m rows and n columns
-matrix* e_alloc(size_t M, size_t N);
+matrix* e_alloc(size_t given_m, size_t given_n);
 
 ///copying a matrix
 matrix* matrix_copy(matrix* a, matrix* b);

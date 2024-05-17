@@ -45,9 +45,13 @@
 		</Unit>
 		<Unit filename="matrix.h" />
 		<Unit filename="matrix_actions.h" />
+		<Unit filename="matrix_print.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="matrix_size.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="matrix_structure.h" />
 		<Unit filename="multiplying.c">
 			<Option compilerVar="CC" />
 		</Unit>

@@ -3,6 +3,7 @@
 #include <malloc.h>
 #include "matrix.h"
 #include "matrix_actions.h"
+#include "matrix_structure.h"
 
 void element_swap(element_t* a, element_t* b)
 {
@@ -19,22 +20,27 @@ matrix* transpose(matrix* a, matrix* b)
     if(!b)
     {
         b = matrix_alloc(na, ma);
+        if (!b)
+        {
+            return NULL;
+        }
+
     }
     else
     {
-        if((matrix_m(b)!=na) ||(matrix_n(b)!=ma))
+        if (b->m != na || b->n != ma)
         {
             b = matrix_resize(b, na, ma);
+            if (!b)
+            {
+                return NULL;
+            }
         }
     }
 
-    if(!b)
+    for(size_t i = 0; i < ma; i++)
     {
-        return NULL;
-    }
-    for(size_t i=0; i < ma; i++)
-    {
-        for(size_t j  =0; j < na; j++)
+        for(size_t j = 0; j < na; j++)
         {
             element_t x = in_index(a, i, j);
             change_elem(b, j, i, x);

@@ -1,57 +1,64 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <malloc.h>
+#include <math.h>
 #include "matrix.h"
 #include "matrix_actions.h"
 
-matrix* gauss (matrix* a)
+matrix* gauss(matrix* a)
 {
-    size_t ma = matrix_m(a);
-    size_t na = matrix_n(a);
-    matrix* b = matrix_alloc(ma, 1);
-    for(size_t i=0; i<ma; i++)
+    size_t n = matrix_m(a);
+    size_t m = matrix_n(a);
+    matrix* x = matrix_alloc(n, 1);
+
+    for (size_t i = 0; i < n; i++)
     {
-        if(in_index(a, i, i)==0.0)
+        double max_elem = fabs(in_index(a, i, i));
+        size_t max_row = i;
+        for (size_t k = i + 1; k < n; k++)
         {
-            for(size_t j=i; j<ma; j++)
+            if (fabs(in_index(a, k, i)) > max_elem)
             {
-                if(in_index(a, j, i)!=0.0)
+                max_elem = fabs(in_index(a, k, i));
+                max_row = k;
+            }
+        }
+
+        if (i != max_row)
+        {
+            swap_strings(a, i, max_row);
+        }
+
+        for (size_t k = i + 1; k < n; k++)
+        {
+            double c = -in_index(a, k, i) / in_index(a, i, i);
+            for (size_t j = i; j < m; j++)
+            {
+                if (i == j)
                 {
-                    swap_strings(a, i, j);
-                    break;
+                    change_elem(a, k, j, 0);
+                }
+                else
+                {
+                    change_elem(a, k, j, in_index(a, k, j) + c * in_index(a, i, j));
                 }
             }
         }
-        if(in_index(a, i, i)==0.0)
-        {
-            change_elem(b, 0, 0, 0.0/0.0);
-            return b;
-        }
-        element_t k=in_index(a, i, i);
-        for(size_t j=i+1; j<ma; j++)
-        {
-            element_t l=in_index(a, j, i);
-            minus_str(a, j, i, l/k);
-        }
     }
-    if(in_index(a, ma-1, ma-1)==0.0)
-    {
 
-        change_elem(b, 0, 0, 0.0/0.0);
-        return b;
-    }
-    for(size_t j=ma; j>0; j--)
+    for (int i = n - 1; i >= 0; i--)
     {
-        size_t i=j-1;
-        element_t x=in_index(a, i, na-1);
-        for(size_t j=ma-1; j>i; j--)
+        double x_i = in_index(a, i, m - 1) / in_index(a, i, i);
+        change_elem(x, i, 0, x_i);
+
+        for (int k = i - 1; k >= 0; k--)
         {
-            x-=in_index(b, j, 0)*in_index(a, i, j);
+            double c = -in_index(a, k, i) * x_i;
+            change_elem(a, k, m - 1, in_index(a, k, m - 1) + c);
         }
-        element_t u=in_index(a, i, i);
-        change_elem(b, i, 0, x/u);
     }
-    return b;
+
+    return x;
 }
 
 matrix* matrix_exp(matrix* a, element_t eps)
@@ -92,20 +99,19 @@ matrix* matrix_exp(matrix* a, element_t eps)
 
 element_t matrix_norm(matrix* a)
 {
-    size_t ma = matrix_m(a);
-    size_t na = matrix_n(a);
+    size_t current_m = matrix_m(a);
+    size_t current_n = matrix_n(a);
     element_t norm = 0;
-    for(size_t i=0; i<na; i++)
+
+    for(size_t i=0; i < current_n; i++)
     {
         element_t cur_norm = 0;
-        for(size_t j = 0; j<ma; j++)
+
+        for(size_t j = 0; j < current_m; j++)
         {
             cur_norm+=fabs(in_index(a, j, i));
         }
-        if(cur_norm>norm)
-        {
-            norm=cur_norm;
-        }
+        norm = fmax(norm, cur_norm);
     }
     return norm;
 }

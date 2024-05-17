@@ -1,168 +1,152 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <malloc.h>
+#include <math.h>
 #include "matrix.h"
 #include "matrix_actions.h"
-
+#include "matrix_structure.h"
 
 int main()
 {
     matrix* a;
     matrix* b;
-    printf("enter a size\n");
-    int n;
+    int n, m, mk, nk, hk, wk, str1, str2;
+
+
+    printf("Enter the size of matrix a: \n");
     scanf("%d", &n);
-    a=null_alloc(n, n);
-    printf("enter a\n");
-    for(int i=0; i<n; i++)
-    {
-        for(int j=0; j<n; j++)
-        {
+    a = matrix_alloc(n, n);
+    printf("Enter matrix a:\n");
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
             double x;
             scanf("%lf", &x);
             change_elem(a, i, j, x);
         }
     }
-    printf("enter eps\n");
-    double y;
-    scanf("%lf", &y);
-    b=matrix_exp(a, y);
-    for(int i=0; i<n; i++)
-    {
-        for(int j=0; j<n; j++)
-        {
-            double x=in_index(b, i, j);
-            printf("%lf ", x);
-        }
-        printf("\n");
-    }
+
+    printf("Matrix exp\n");
+    printf("Enter eps:\n");
+    double eps;
+    scanf("%lf", &eps);
+    b = matrix_exp(a, eps);
+    printf("Matrix exponent result:\n");
+    matrix_print(b);
     matrix_free(b);
 
-    printf("enter a sizes\n");
-    int mk;
+    printf("Matrix transposing\n");
+    printf("Enter the sizes for matrix a:\n");
     scanf("%d%d", &mk, &n);
     matrix_free(a);
-    a=matrix_alloc(mk, n);
-    printf("enter a\n");
-    for(int i=0; i<mk; i++)
-    {
-        for(int j=0; j<n; j++)
-        {
+    a = matrix_alloc(mk, n);
+    printf("Enter matrix for transposing:\n");
+    for (int i = 0; i < mk; i++) {
+        for (int j = 0; j < n; j++) {
             double x;
             scanf("%lf", &x);
             change_elem(a, i, j, x);
         }
     }
-    a=self_transpose(a);
-    printf("transposed a:\n");
-    for(int i=0; i<n; i++)
-    {
-        for(int j=0; j<mk; j++)
-        {
-            double x=in_index(a, i, j);
-            printf("%lf ", x);
-        }
-        printf("\n");
-    }
+    a = self_transpose(a);
+    printf("Transposed matrix:\n");
+    matrix_print(a);
     matrix_free(a);
 
-    printf("enter a size\n");
-    scanf("%d", &n);
-    a=matrix_alloc(n, n+1);
-    matrix* A=matrix_alloc(n, n);
-    for(int i=0; i<n; i++)
+    printf("Swap two strings in matrix a:\n");
+    printf("Enter the sizes for matrix a:\n");
+    scanf("%d%d", &n, &m);
+    a = matrix_alloc(m, n);
+    printf("Enter matrix a:\n");
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; ++j) {
+            double x;
+            scanf("%lf", &x);
+            change_elem(a, i, j, x);
+        }
+    }
+    printf("matrix a:\n");
+    matrix_print(a);
+    printf("Enter number of strings:\n");
+    scanf("%d%d", &str1, &str2);
+    swap_strings(a, str1, str2);
+    printf("Matrix after swapping strings:\n");
+    matrix_print(a);
+    matrix_free(a);
+
+
+    printf("Gauss method:\n");
+    printf("Enter the sizes for matrix a:\n");
+    scanf("%d%d", &n, &m);
+    a = matrix_alloc(n, m + 1);
+    matrix* A = matrix_alloc(n, m);
+    printf("Enter matrix elements:\n");
+    for (int i = 0; i < n; i++)
     {
-        for(int j=0; j<=n; j++)
+        for (int j = 0; j <= m; j++)
         {
             double x;
             scanf("%lf", &x);
             change_elem(a, i, j, x);
-            if(j!=n)
+            if (j < m)
             {
                 change_elem(A, i, j, x);
             }
         }
     }
 
-    b=gauss(a);
-    double X = in_index(b, 0, 0);
-    if(X != X)
+    b = gauss(a);
+    printf("Solution:\n");
+    if (isnan(in_index(b, 0, 0)))
     {
-        printf("No solutions\n");
+        printf("No solutions or infinite number of solutions\n");
     }
     else
     {
-        printf("solution:\n");
-        for(int j=0; j<n; j++)
-        {
-            double x=in_index(b, j, 0);
-            printf("%lf ", x);
-        }
-        printf("\n");
+        matrix_print(b);
     }
 
-    //multiplying matrices
+    printf("Multiplying matrix and vector:\n");
     matrix* c=matrix_alloc(n, 1);
-    c=matrix_multipl(A, b, c);
-    printf("result of multiplying:\n");
-    for(int j=0; j<n; j++)
-    {
-        double x=in_index(c, j, 0);
-        printf("%lf ", x);
-    }
+    c = matrix_multipl(A, b, c);
+    printf("Result of multiplying A and b:\n");
+    matrix_print(c);
 
-    printf("\n");
-
-    int wk, nk, hk;
-    matrix* d = matrix_alloc(mk,wk);
-    printf("enter a sizes\n");
+    printf("Adding matrices:\n");
+    printf("Enter the sizes for matrix a:\n");
     scanf("%d%d", &mk, &nk);
     matrix_free(a);
-    a=matrix_alloc(mk, n);
-    printf("enter a\n");
-    for(int i=0; i<mk; i++)
-    {
-        for(int j=0; j<n; j++)
-        {
+    a = matrix_alloc(mk, nk);
+    printf("Enter matrix a:\n");
+    for (int i = 0; i < mk; i++) {
+        for (int j = 0; j < nk; j++) {
             double x;
             scanf("%lf", &x);
             change_elem(a, i, j, x);
         }
     }
 
-
-    printf("enter b sizes\n");
+    printf("Enter the sizes for matrix b:\n");
     scanf("%d%d", &hk, &wk);
     matrix_free(b);
-    b=matrix_alloc(hk, wk);
-    printf("enter a\n");
-    for(int i=0; i<hk; i++)
-    {
-        for(int j=0; j<wk; j++)
-        {
+    b = matrix_alloc(hk, wk);
+    printf("Enter matrix b:\n");
+    for (int i = 0; i < hk; i++) {
+        for (int j = 0; j < wk; j++) {
             double x;
             scanf("%lf", &x);
-            change_elem(a, i, j, x);
+            change_elem(b, i, j, x);
         }
     }
 
-    d = adding(a, b);
-    for(int i=0; i<wk; i++)
-    {
-        for(int j=0; j<mk; j++)
-        {
-            double x=in_index(d, i, j);
-            printf("%lf ", x);
-        }
-        printf("\n");
-    }
-
+    matrix* d = adding(a, b);
+    printf("Result of adding a and b:\n");
+    matrix_print(d);
 
     matrix_free(A);
-    matrix_free(c);
     matrix_free(a);
+    matrix_free(c);
     matrix_free(b);
     matrix_free(d);
+
     _getch();
     return 0;
 }

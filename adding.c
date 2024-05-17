@@ -11,23 +11,23 @@ matrix* adding(matrix* a, matrix* b)
         return NULL;
     }
 
-    size_t ma=matrix_m(a);
-    size_t mb=matrix_m(b);
-    size_t na=matrix_n(a);
-    size_t nb=matrix_n(b);
+    size_t am=matrix_m(a);
+    size_t bm=matrix_m(b);
+    size_t an=matrix_n(a);
+    size_t bn=matrix_n(b);
 
-    if(ma!=mb || na!=nb)
+    if(am!=bm || an!=bn)
     {
         return NULL;
     }
 
-    for(size_t i=0; i<ma; i++)
+    for(size_t i = 0; i < am; i++)
     {
-        for(size_t j=0; j<na; j++)
+        for(size_t j = 0; j < an; j++)
         {
-            element_t x=in_index(a, i, j);
-            element_t y=in_index(b, i, j);
-            change_elem(a, i, j, x+y);
+            element_t x = in_index(a, i, j);
+            element_t y = in_index(b, i, j);
+            change_elem(a, i, j, x + y);
         }
     }
     return a;
